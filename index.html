@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Socket.IO chat</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font: 13px Helvetica, Arial;
+    }
+
+    div {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    button {
+      width: 100px;
+      height: 50px;
+      padding: 10px;
+      border-radius: 25px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <button onclick="handleClick()">Push me</button>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+  </script>
+  <script>
+    var handleClick = () => {
+      fetch("/click", { method: 'POST' })
+      socket.emit('chat message', "clicked via socket.io");
+    }
+  </script>
+  <script>
+    socket.on('chat message', function (msg) {
+      console.log("С сервера:" + msg);
+    });
+  </script>
+
+</body>
+
+</html>
